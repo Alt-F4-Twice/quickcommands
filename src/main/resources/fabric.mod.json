@@ -1,18 +1,15 @@
+
 {
 	"schemaVersion": 1,
 	"id": "quickcommands",
 	"version": "${version}",
-	"name": "QuickCommands",
-	"description": "Short commands for common stuff: /c /s /sp /a /heal /feed /killall",
-	"authors": [
-		"Max"
-	],
+	"name": "QuickTime",
+	"description": "Adds better quick and easy commands!\nFor example: /S = Survival or /C = Creative \n\n§7by §fMax",
+	"icon": "assets/icon/icon.png",
 	"license": "CC0-1.0",
 	"environment": "*",
 	"entrypoints": {
-		"main": [
-			"com.example.quickcommands.QuickCommands"
-		]
+		"main": ["com.example.quickcommands.QuickCommands"]
 	},
 	"depends": {
 		"fabricloader": ">=0.20.1",
