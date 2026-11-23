@@ -22,9 +22,17 @@ import java.util.function.Predicate;
  */
 public class QuickCommands implements ModInitializer {
 
+    /**
+     * The dispatcher Minecraft gives us when commands are (re)registered. We keep it instead of
+     * calling source.getServer(), because that is null while the command list is sent to a joining player.
+     */
+    private static CommandDispatcher<CommandSourceStack> DISPATCHER;
+
     @Override
     public void onInitialize() {
         CommandRegistrationCallback.EVENT.register((dispatcher, buildContext, selection) -> {
+            DISPATCHER = dispatcher;
+
             // /c /s /sp /a  [players]
             gamemode(dispatcher, "c", "creative");
             gamemode(dispatcher, "s", "survival");
@@ -109,19 +117,22 @@ public class QuickCommands implements ModInitializer {
 
     /** Runs a vanilla command as the same source, showing vanilla's own feedback. */
     private static int run(CommandSourceStack source, String command) throws CommandSyntaxException {
-        return source.getServer().getCommands().getDispatcher().execute(command, source);
+        return DISPATCHER.execute(command, source);
     }
 
     /** Runs a vanilla command as the same source but hides vanilla's feedback message. */
     private static int runSilently(CommandSourceStack source, String command) throws CommandSyntaxException {
-        return source.getServer().getCommands().getDispatcher().execute(command, source.withSuppressedOutput());
+        return DISPATCHER.execute(command, source.withSuppressedOutput());
     }
 
     /** Only lets people who could use the vanilla command use ours (and hides ours from tab-complete otherwise). */
     private static Predicate<CommandSourceStack> canUse(String vanillaCommand) {
         return source -> {
-            CommandNode<CommandSourceStack> node = source.getServer().getCommands().getDispatcher()
-                    .getRoot().getChild(vanillaCommand);
+            CommandDispatcher<CommandSourceStack> dispatcher = DISPATCHER;
+            if (dispatcher == null) {
+                return false;
+            }
+            CommandNode<CommandSourceStack> node = dispatcher.getRoot().getChild(vanillaCommand);
             return node != null && node.canUse(source);
         };
     }
