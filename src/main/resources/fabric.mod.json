@@ -1,15 +1,18 @@
-
 {
 	"schemaVersion": 1,
 	"id": "quickcommands",
 	"version": "${version}",
-	"name": "QuickTime",
-	"description": "Adds better quick and easy commands!\nFor example: /S = Survival or /C = Creative \n\n§7by §fMax",
-	"icon": "assets/icon/icon.png",
+	"name": "QuickCommands",
+	"description": "Adds better quick and easy commands! For example: /S = Survival or /C = Creative",
+	"authors": [
+		"Max"
+	],
 	"license": "CC0-1.0",
 	"environment": "*",
 	"entrypoints": {
-		"main": ["com.example.quickcommands.QuickCommands"]
+		"main": [
+			"com.example.quickcommands.QuickCommands"
+		]
 	},
 	"depends": {
 		"fabricloader": ">=0.20.1",
