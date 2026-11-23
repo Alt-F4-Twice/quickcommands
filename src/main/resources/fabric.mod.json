@@ -3,6 +3,7 @@
 	"id": "quickcommands",
 	"version": "${version}",
 	"name": "QuickCommands",
+	"icon": "assets/quickcommands/icon.png",
 	"description": "Adds better quick and easy commands! For example: /S = Survival or /C = Creative",
 	"authors": [
 		"Max"
